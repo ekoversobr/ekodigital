@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Disallow: /ekodigital/obrigado/
+Sitemap: https://ekoversobr.github.io/ekodigital/sitemap.xml
