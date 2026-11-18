@@ -138,6 +138,7 @@ document.addEventListener('click', function(ev){
   }
   preencherOcultos();
 
+  window.addEventListener('pageshow', function(){ var b=f.querySelector('button[type="submit"]'); if(b) b.disabled=false; });
   f.addEventListener('submit', function(ev){
     ev.preventDefault();
     var erro = f.querySelector('.erro');
@@ -151,7 +152,7 @@ document.addEventListener('click', function(ev){
     erro.style.display = 'none';
     preencherOcultos();
     var botao = f.querySelector('button[type="submit"]');
-    botao.disabled = true; botao.textContent = 'Enviando...';
+    botao.disabled = true;
 
     var dados = new URLSearchParams(new FormData(f));
     dados.append('enviado_em', new Date().toISOString());
@@ -164,14 +165,17 @@ document.addEventListener('click', function(ev){
       user_data:{ phone_number:'+55' + digitos }
     });
 
-    var foi = false;
-    function seguir(){ if(foi) return; foi = true; location.href = 'obrigado/'; }
-    setTimeout(seguir, 2500);
-    if(ENDPOINT_PLANILHA.indexOf('http') !== 0){
-      console.warn('[JS Digital] Configure ENDPOINT_PLANILHA em assets/site.js');
-      setTimeout(seguir, 400); return;
+    // envia pra planilha em segundo plano (se configurada) e abre o WhatsApp direto
+    if(ENDPOINT_PLANILHA.indexOf('http') === 0){
+      try{ fetch(ENDPOINT_PLANILHA, {method:'POST', mode:'no-cors', body:dados, keepalive:true}); }catch(e){}
     }
-    fetch(ENDPOINT_PLANILHA, {method:'POST', mode:'no-cors', body:dados})
-      .then(seguir).catch(seguir);
+    var v = function(n){ var el = f.querySelector('[name="'+n+'"]'+(n==='ja_investe'?':checked':'')); return el ? el.value : ''; };
+    var msg = 'Olá! Quero agendar uma conversa sobre a gestão para minha clínica.\n\n' +
+      'Nome: ' + v('nome') + '\nClínica: ' + v('clinica') + '\nCidade: ' + v('cidade') +
+      '\nWhatsApp: ' + tel.value + '\nJá investe em anúncio: ' + v('ja_investe') +
+      '\nMelhor horário: ' + v('melhor_horario');
+    setTimeout(function(){
+      location.href = 'https://wa.me/5583996224306?text=' + encodeURIComponent(msg);
+    }, 300);
   });
 })();

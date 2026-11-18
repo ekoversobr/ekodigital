@@ -234,7 +234,7 @@ try{if(localStorage.getItem('jsd_consent')==='granted'){gtag('consent','update',
 
     <form class="form" id="form-lead" novalidate>
       <h3>Prefere que eu te chame?</h3>
-      <p class="mini">Deixe seus dados e eu entro em contato pelo WhatsApp.</p>
+      <p class="mini">Preencha e a conversa já abre no meu WhatsApp.</p>
       <div class="campo"><label for="f-nome">Seu nome</label><input id="f-nome" name="nome" autocomplete="name" required></div>
       <div class="campo"><label for="f-clinica">Nome da clínica</label><input id="f-clinica" name="clinica" autocomplete="organization" required></div>
       <div class="campo"><label for="f-cidade">Cidade</label><input id="f-cidade" name="cidade" autocomplete="address-level2" required></div>
@@ -254,7 +254,10 @@ try{if(localStorage.getItem('jsd_consent')==='granted'){gtag('consent','update',
       <input type="hidden" name="utm_source"><input type="hidden" name="utm_medium"><input type="hidden" name="utm_campaign">
       <input type="hidden" name="utm_term"><input type="hidden" name="utm_content">
       <input type="hidden" name="pagina_origem"><input type="hidden" name="referrer">
-      <button class="btn-form" type="submit">Quero que me chamem</button>
+      <button class="btn-zap" type="submit" style="width:100%;justify-content:center;border:0;cursor:pointer;font:inherit;font-weight:700">
+        <svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><use href="#zap"/></svg>
+        Agendar uma conversa
+      </button>
       <p class="erro" role="alert"></p>
       <p class="aviso-form">Seus dados são usados só para este contato. Veja a <a href="privacidade/">política de privacidade</a>.</p>
     </form>
